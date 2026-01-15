@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 var vscode = require('vscode');
 var MarkdownIt = require('markdown-it');
-const clipboardy = require('clipboardy');
+const { clipboard } = require('electron');
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -44,7 +44,13 @@ function activate(context) {
         var md = new MarkdownIt(settings);
         var result = md.render(text);
 
-        clipboardy.writeSync(result);
+        // Write both HTML and plain text to clipboard
+        // The html property enables rich text pasting in Word, Google Docs, etc.
+        // The text property provides the raw HTML source as a fallback for plain text editors
+        clipboard.write({
+            text: result,
+            html: result
+        });
     });
 
     context.subscriptions.push(disposable);
