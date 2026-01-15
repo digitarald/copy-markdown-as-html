@@ -45,7 +45,8 @@ function activate(context) {
         var result = md.render(text);
 
         // Write both HTML and plain text to clipboard
-        // This enables rich text pasting in Word, Google Docs, etc.
+        // The html property enables rich text pasting in Word, Google Docs, etc.
+        // The text property provides the raw HTML source as a fallback for plain text editors
         clipboard.write({
             text: result,
             html: result
